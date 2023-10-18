@@ -1,2 +1,7 @@
 # Auth0SignIn
-Prototype for signing in to a FlutterFlow app via Auth0
+
+A new Flutter project.
+
+## Getting Started
+
+FlutterFlow projects are built to run on the Flutter _stable_ release.
