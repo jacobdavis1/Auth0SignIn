@@ -3,33 +3,27 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'home_page_model.dart';
-export 'home_page_model.dart';
+import 'sign_in_model.dart';
+export 'sign_in_model.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({Key? key}) : super(key: key);
+class SignInWidget extends StatefulWidget {
+  const SignInWidget({Key? key}) : super(key: key);
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _SignInWidgetState createState() => _SignInWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
-  late HomePageModel _model;
+class _SignInWidgetState extends State<SignInWidget> {
+  late SignInModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HomePageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.isLoggedIn = await actions.hasValidCredentials();
-    });
+    _model = createModel(context, () => SignInModel());
   }
 
   @override
@@ -58,10 +52,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (!_model.isLoggedIn!)
+                if (FFAppState().hasCredentials)
                   FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      await actions.auth0LogIn();
                     },
                     text: 'Log In',
                     options: FFButtonOptions(
@@ -84,13 +78,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                if (_model.isLoggedIn ?? true)
+                if (FFAppState().hasCredentials)
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        await actions.auth0LogOut();
                       },
                       text: 'Log Out',
                       options: FFButtonOptions(

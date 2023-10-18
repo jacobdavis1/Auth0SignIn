@@ -11,7 +11,10 @@ import 'package:auth0_flutter/auth0_flutter.dart';
 Future<bool> hasValidCredentials() async {
   final Auth0 auth0 =
       Auth0(FFAppState().Auth0ClientDomain, FFAppState().Auth0ClientID);
-  return auth0.credentialsManager.hasValidCredentials();
+  if (auth0.credentialsManager != null)
+    return auth0.credentialsManager.hasValidCredentials();
+  else
+    return false;
 }
 
 // Set your action name, define your arguments and return parameter,
