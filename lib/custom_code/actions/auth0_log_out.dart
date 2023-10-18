@@ -15,6 +15,10 @@ Future<void> auth0LogOut() async {
 
     await auth0.webAuthentication(scheme: "auth0signin").logout();
 
+    FFAppState().update(() {
+      FFAppState().hasCredentials = false;
+    });
+
     // Could also read auth0.UserProfile and populate a CDT in App State
   } on Exception catch (e, s) {
     debugPrint('login error: $e - stack: $s');

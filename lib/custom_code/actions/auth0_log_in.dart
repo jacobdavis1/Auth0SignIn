@@ -16,6 +16,11 @@ Future<void> auth0LogIn() async {
     final Credentials credentials =
         await auth0.webAuthentication(scheme: "auth0signin").login();
 
+    if (await auth0.credentialsManager.hasValidCredentials())
+      FFAppState().update(() {
+        FFAppState().hasCredentials = true;
+      });
+
     // Could also read auth0.UserProfile and populate a CDT in App State
   } on Exception catch (e, s) {
     debugPrint('login error: $e - stack: $s');
