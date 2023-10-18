@@ -52,7 +52,7 @@ class _SignInWidgetState extends State<SignInWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (FFAppState().hasCredentials)
+                if (!FFAppState().hasCredentials)
                   FFButtonWidget(
                     onPressed: () async {
                       await actions.auth0LogIn();
